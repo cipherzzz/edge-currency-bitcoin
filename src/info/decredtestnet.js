@@ -3,35 +3,41 @@ import type { AbcCurrencyInfo } from 'edge-core-js'
 
 export const decredTestnetInfo: AbcCurrencyInfo = {
   // Basic currency information:
-  currencyCode: 'BTC',
+  currencyCode: 'DCR',
   currencyName: 'Decred',
   pluginName: 'decred',
   denominations: [
-    { name: 'BTC', multiplier: '100000000', symbol: 'D' }
+    { name: 'DCR', multiplier: '100000000', symbol: 'D' },
+    { name: 'mDCR', multiplier: '100000', symbol: 'mD' },
+    { name: 'atoms', multiplier: '100', symbol: 'a' }
   ],
-  walletTypes: [
-    'wallet:bitcoin'
-  ],
+  walletTypes: ['wallet:decred-bip44', 'wallet:decred'],
 
   // Configuration options:
   defaultSettings: {
     network: {
-      type: 'bitcoin',
+      type: 'decred',
+      // https://github.com/decred/dcrd/blob/master/wire/protocol.go#L104
       magic: 0x48e7a065,
       keyPrefix: {
-        privkey: 0x80,
-        xpubkey: 0x0488b21e,
-        xprivkey: 0x0488ade4,
-        xpubkey58: 'xpub',
-        xprivkey58: 'xprv',
-        coinType: 0
+        // https://github.com/decred/dcrd/blob/master/chaincfg/params.go#L823
+        privkey: 0x230e, // BTC is 0x80,
+        // https://github.com/decred/dcrd/blob/master/chaincfg/params.go#L827
+        xpubkey: 0x043587d1,
+        // https://github.com/decred/dcrd/blob/master/chaincfg/params.go#L826
+        xprivkey: 0x04358397,
+        xpubkey58: 'tpub',
+        xprivkey58: 'tprv',
+        // mainnet is 42 - testnet is 1
+        coinType: 1
       },
       addressPrefix: {
-        pubkeyhash: 0x00,
-        scripthash: 0x05,
-        witnesspubkeyhash: 0x06,
-        witnessscripthash: 0x0a,
-        bech32: 'bc'
+        // https://github.com/decred/dcrd/blob/master/chaincfg/params.go#L819
+        pubkeyhash: 0x0f21, // BTC is 0x00,
+        scripthash: 0x0efc, // BTC is 0x05,
+        witnesspubkeyhash: null,
+        witnessscripthash: null,
+        bech32: null
       }
     },
     customFeeSettings: ['satPerByte'],
@@ -39,7 +45,7 @@ export const decredTestnetInfo: AbcCurrencyInfo = {
     maxFee: 1000000,
     defaultFee: 1000,
     feeUpdateInterval: 60000,
-    feeInfoServer: 'https://bitcoinfees.21.co/api/v1/fees/list',
+    feeInfoServer: '',
     infoServer: 'https://info1.edgesecure.co:8444/v1',
     simpleFeeSettings: {
       highFee: '150',
@@ -49,9 +55,7 @@ export const decredTestnetInfo: AbcCurrencyInfo = {
       standardFeeLowAmount: '173200',
       standardFeeHighAmount: '8670000'
     },
-    electrumServers: [
-      'electrums://127.0.0.1:50001'
-    ]
+    electrumServers: ['electrums://127.0.0.1:50001']
   },
   metaTokens: [],
 

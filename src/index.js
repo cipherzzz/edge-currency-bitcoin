@@ -79,7 +79,9 @@ export const dogecoinCurrencyPluginFactory = makePluginFactory(dogecoinInfo)
 export const litecoinCurrencyPluginFactory = makePluginFactory(litecoinInfo)
 
 // Decred Testnet:
-export const decredTestnetCurrencyPluginFactory = makePluginFactory(decredTestnetInfo)
+export const decredTestnetCurrencyPluginFactory = makePluginFactory(
+  decredTestnetInfo
+)
 
 // Legacy uppercased names:
 export {
